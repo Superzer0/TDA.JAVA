@@ -23,7 +23,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>libs/</classpathPrefix>
-                            <mainClass>com.company.Main</mainClass>
+                            <mainClass>com.github.superzer0.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
