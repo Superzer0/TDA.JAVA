@@ -24,5 +24,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="Maven: org.processing:core:3.2.3" level="project" />
+    <orderEntry type="library" name="Maven: com.esotericsoftware.minlog:minlog:1.2" level="project" />
   </component>
 </module>
