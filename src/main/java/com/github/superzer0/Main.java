@@ -21,7 +21,6 @@ public class Main {
 
     private static final String DEFAULT_IMAGE_CAPTION = "Barcodes";
     private static final String DEFAULT_HOMOLOGY_FILE_NAME = "persistent_homology_summary.txt";
-    private static final int DEFAULT_COUNT_LANDMARKS = 200;
     private static final int DEFAULT_MAX_DIVISIONS = 100;
 
     public static void main(String[] args) throws IOException {
@@ -55,12 +54,12 @@ public class Main {
         VietorisRipsStream<double[]> vietorisRipsStream;
 
         if (inputParams.isUseLandmarks()) {
-            int lazyPointsToProcess = getLazyPointCount(points.length);
+            int lazyPointsToProcess = getLazyPointCount(points.length, inputParams.getMaxLandmarks());
             MaxMinLandmarkSelector<double[]> minMaxSelector = Plex4.createMaxMinSelector(points, lazyPointsToProcess);
             vietorisRipsStream = Plex4.createVietorisRipsStream(minMaxSelector,
                     inputParams.getMaxDimension(), inputParams.getMaxFiltrationValue(), DEFAULT_MAX_DIVISIONS);
 
-            Log.info("Lazy points to process: " + lazyPointsToProcess);
+            Log.info("Landmark points to process: " + lazyPointsToProcess);
         } else {
             vietorisRipsStream = Plex4.createVietorisRipsStream(points, inputParams.getMaxDimension(),
                     inputParams.getMaxFiltrationValue(), DEFAULT_MAX_DIVISIONS);
@@ -123,9 +122,9 @@ public class Main {
         }
     }
 
-    private static int getLazyPointCount(int pointsNumber) {
-        if (pointsNumber > DEFAULT_COUNT_LANDMARKS)
-            return DEFAULT_COUNT_LANDMARKS;
+    private static int getLazyPointCount(int pointsNumber, int maxLandmarks) {
+        if (pointsNumber > maxLandmarks)
+            return maxLandmarks;
         else return pointsNumber;
     }
 }
