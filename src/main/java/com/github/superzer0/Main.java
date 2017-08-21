@@ -16,12 +16,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
-
-    private static final String DEFAULT_IMAGE_CAPTION = "Barcodes";
-    private static final String DEFAULT_HOMOLOGY_FILE_NAME = "persistent_homology_summary.txt";
-    private static final int DEFAULT_MAX_DIVISIONS = 100;
 
     public static void main(String[] args) throws IOException {
 
@@ -48,6 +46,7 @@ public class Main {
 
         saveBarcodesText(inputParams, computedIntervals);
         saveBarcodePlot(inputParams, computedIntervals);
+        saveDiagramsEntropy(inputParams, computedIntervals);
     }
 
     private static VietorisRipsStream<double[]> getVietorisRipsStream(ProcessingInputParams inputParams, double[][] points) {
@@ -57,12 +56,12 @@ public class Main {
             int lazyPointsToProcess = getLazyPointCount(points.length, inputParams.getMaxLandmarks());
             MaxMinLandmarkSelector<double[]> minMaxSelector = Plex4.createMaxMinSelector(points, lazyPointsToProcess);
             vietorisRipsStream = Plex4.createVietorisRipsStream(minMaxSelector,
-                    inputParams.getMaxDimension(), inputParams.getMaxFiltrationValue(), DEFAULT_MAX_DIVISIONS);
+                    inputParams.getMaxDimension(), inputParams.getMaxFiltrationValue(), DefaultSettings.DEFAULT_MAX_DIVISIONS);
 
             Log.info("Landmark points to process: " + lazyPointsToProcess);
         } else {
             vietorisRipsStream = Plex4.createVietorisRipsStream(points, inputParams.getMaxDimension(),
-                    inputParams.getMaxFiltrationValue(), DEFAULT_MAX_DIVISIONS);
+                    inputParams.getMaxFiltrationValue(), DefaultSettings.DEFAULT_MAX_DIVISIONS);
             Log.info("Points to process: " + points.length);
         }
         return vietorisRipsStream;
@@ -80,13 +79,12 @@ public class Main {
     }
 
     private static void saveBarcodesText(ProcessingInputParams inputParams, BarcodeCollection<Double> computedIntervals) {
-        try {
+        try (PrintWriter writer = new PrintWriter(Paths.get(inputParams.getOutputFolder().toString(),
+                DefaultSettings.DEFAULT_HOMOLOGY_FILE_NAME).toString(), "UTF-8")) {
             Log.info("Saving intervals as text with basic info...");
-            PrintWriter writer = new PrintWriter(Paths.get(inputParams.getOutputFolder().toString(),
-                    DEFAULT_HOMOLOGY_FILE_NAME).toString(), "UTF-8");
+
             writer.println(computedIntervals.getBettiNumbers());
             writer.println(computedIntervals.toString());
-            writer.close();
             Log.info("Saving intervals done.");
         } catch (IOException e) {
             Log.error("Saving intervals as text with basic info failed", e);
@@ -115,11 +113,37 @@ public class Main {
         BarcodeWriter writer = BarcodeWriter.getInstance();
 
         for (int dimension : collection.getDimensions()) {
-            String imageFilename = DEFAULT_IMAGE_CAPTION + "_" + dimension;
+            String imageFilename = DefaultSettings.DEFAULT_IMAGE_CAPTION + "_" + dimension;
             String fullFileName = imageFilename + "." + writer.getExtension();
             String path = Paths.get(folderPath, fullFileName).toString();
             writer.writeToFile(collection, dimension, endPoint, imageFilename, path);
         }
+    }
+
+    private static void saveDiagramsEntropy(ProcessingInputParams inputParams, BarcodeCollection<Double> computedIntervals) {
+        List<Double> entropiesList = new ArrayList<>();
+
+        Log.error("Computing diagrams entropy...");
+
+        for (int dimension : computedIntervals.getDimensions()) {
+            List<Interval<Double>> intervalsAtDimension = computedIntervals.getIntervalsAtDimension(dimension);
+            entropiesList.add(computeDiagramEntropy(intervalsAtDimension));
+        }
+
+        try (PrintWriter writer = new PrintWriter(Paths.get(inputParams.getOutputFolder().toString(),
+                DefaultSettings.DEFAULT_ENTROPY_FILE_NAME).toString(), "UTF-8")) {
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(writer, entropiesList);
+            Log.error("Computing diagrams entropy done");
+
+        } catch (IOException ioException) {
+            Log.error("Saving entropy failed", ioException);
+        }
+    }
+
+    private static double computeDiagramEntropy(List<Interval<Double>> intervals) {
+        return 0.1d;
     }
 
     private static int getLazyPointCount(int pointsNumber, int maxLandmarks) {
