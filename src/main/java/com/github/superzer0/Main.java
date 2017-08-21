@@ -127,7 +127,8 @@ public class Main {
 
         for (int dimension : computedIntervals.getDimensions()) {
             List<Interval<Double>> intervalsAtDimension = computedIntervals.getIntervalsAtDimension(dimension);
-            entropiesList.add(computeDiagramEntropy(intervalsAtDimension));
+            if (intervalsAtDimension != null)
+                entropiesList.add(computeDiagramEntropy(intervalsAtDimension));
         }
 
         try (PrintWriter writer = new PrintWriter(Paths.get(inputParams.getOutputFolder().toString(),
