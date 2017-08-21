@@ -143,7 +143,21 @@ public class Main {
     }
 
     private static double computeDiagramEntropy(List<Interval<Double>> intervals) {
-        return 0.1d;
+
+        int entropy = 0;
+        double L = 0;
+        for (Interval<Double> interval : intervals) {
+            Double l = interval.getEnd() - interval.getStart();
+            L += l;
+        }
+
+        for (Interval<Double> interval : intervals) {
+            Double l = interval.getEnd() - interval.getStart();
+            double p = l / L;
+            entropy += p * Math.log(p);
+        }
+
+        return entropy * -1;
     }
 
     private static int getLazyPointCount(int pointsNumber, int maxLandmarks) {
