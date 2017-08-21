@@ -148,11 +148,17 @@ public class Main {
         int entropy = 0;
         double L = 0;
         for (Interval<Double> interval : intervals) {
+            if (interval == null)
+                continue;
+
             Double l = interval.getEnd() - interval.getStart();
             L += l;
         }
 
         for (Interval<Double> interval : intervals) {
+            if (interval == null)
+                continue;
+
             Double l = interval.getEnd() - interval.getStart();
             double p = l / L;
             entropy += p * Math.log(p);
