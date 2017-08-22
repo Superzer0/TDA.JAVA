@@ -17,7 +17,7 @@
     <orderEntry type="module-library">
       <library name="Maven: edu.stanford.math:javaplex:4.2.5">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../TDA.JAVA/javaplex-4.2.5.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/javaplex-4.2.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

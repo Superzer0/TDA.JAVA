@@ -12,6 +12,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -19,6 +20,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
@@ -55,8 +57,9 @@
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>2.4.1</version>
                 <configuration>
+                    <finalName>tdathesis_${project.version}</finalName>
                     <archive>
                         <manifest>
                             <mainClass>Main</mainClass>
@@ -65,7 +68,7 @@
                     <descriptors>
                         <descriptor>src/assembly/bin.xml</descriptor>
                     </descriptors>
-                    <finalName>tdathesis_${project.version}</finalName>
+
                     <outputDirectory>${project.build.directory}/dist</outputDirectory>
                     <workDirectory>${project.build.directory}/assembly/work</workDirectory>
                 </configuration>
@@ -96,7 +99,7 @@
             <artifactId>javaplex</artifactId>
             <version>4.2.5</version>
             <scope>system</scope>
-            <systemPath>C:/DEV/TDA.JAVA/javaplex-4.2.5.jar</systemPath>
+            <systemPath>${project.basedir}/libs/javaplex-4.2.5.jar</systemPath>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.processing/core -->

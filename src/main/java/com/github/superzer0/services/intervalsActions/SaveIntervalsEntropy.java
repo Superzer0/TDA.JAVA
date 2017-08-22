@@ -21,7 +21,7 @@ public class SaveIntervalsEntropy implements IIntervalsAction {
     public void run(ProcessingInputParams inputParams, BarcodeCollection<Double> computedIntervals) {
         List<Double> entropiesList = new ArrayList<>();
 
-        Log.error("Computing diagrams entropy...");
+        Log.info("Computing diagrams entropy...");
 
         for (int dimension : computedIntervals.getDimensions()) {
             List<Interval<Double>> intervalsAtDimension = computedIntervals.getIntervalsAtDimension(dimension);
@@ -35,7 +35,7 @@ public class SaveIntervalsEntropy implements IIntervalsAction {
 
             ObjectMapper mapper = new ObjectMapper();
             mapper.writeValue(writer, entropiesList);
-            Log.error("Computing diagrams entropy done");
+            Log.info("Computing diagrams entropy done");
 
         } catch (IOException ioException) {
             Log.error("Saving entropy failed", ioException);
