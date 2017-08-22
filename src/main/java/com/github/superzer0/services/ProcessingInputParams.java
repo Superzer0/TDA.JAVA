@@ -1,11 +1,8 @@
-package com.github.superzer0;
+package com.github.superzer0.services;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Created by SG0219908 on 8/13/2017.
- */
 public class ProcessingInputParams {
 
     private Path pointsCloudFilePath;
@@ -20,7 +17,7 @@ public class ProcessingInputParams {
             throw new IllegalArgumentException("Provided input is not valid for " + param);
     }
 
-    Path getPointsCloudFilePath() {
+    public Path getPointsCloudFilePath() {
         return pointsCloudFilePath;
     }
 
@@ -29,7 +26,7 @@ public class ProcessingInputParams {
         this.pointsCloudFilePath = Paths.get(pointsCloudFilePath.replace("\"", ""));
     }
 
-    int getMaxDimension() {
+    public int getMaxDimension() {
         return maxDimension;
     }
 
@@ -38,7 +35,7 @@ public class ProcessingInputParams {
         this.maxDimension = Integer.parseInt(maxDimension);
     }
 
-    int getMaxFiltrationValue() {
+    public int getMaxFiltrationValue() {
         return maxFiltrationValue;
     }
 
@@ -47,7 +44,7 @@ public class ProcessingInputParams {
         this.maxFiltrationValue = Integer.parseInt(maxFiltrationValue);
     }
 
-    boolean isUseLandmarks() {
+    public boolean useLandmarks() {
         return useLandmarks;
     }
 
@@ -56,7 +53,7 @@ public class ProcessingInputParams {
         this.useLandmarks = Boolean.parseBoolean(useLandmarks);
     }
 
-    Path getOutputFolder() {
+    public Path getOutputFolder() {
         return outputFolder;
     }
 
