@@ -15,8 +15,19 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Computes diagrams entropy based on TDA barcode collection
+ * @author Jakub Kawa
+ * @version 1.0
+ */
+
 public class SaveIntervalsEntropy implements IIntervalsAction {
 
+    /**
+     * Saves as json entropy value for each dimension intervals
+     * @param inputParams processing params
+     * @param computedIntervals TDA algorithm run output
+     */
     @Override
     public void run(ProcessingInputParams inputParams, BarcodeCollection<Double> computedIntervals) {
         List<Double> entropiesList = new ArrayList<>();

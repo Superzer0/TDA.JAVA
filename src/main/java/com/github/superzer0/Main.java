@@ -15,8 +15,26 @@ import edu.stanford.math.plex4.streams.impl.VietorisRipsStream;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * CMD application entry point
+ * Used to orchestrate processing of Topological Analysis processing and
+ * extracting further information like entropy, diagrams ect.
+ *
+ * @author Jakub Kawa
+ * @version 1.0
+ */
+
 public class Main {
 
+    /**
+     * Entry point of the cmd application.
+     * Executes TDA processing on provided args.
+     *
+     * @param args arguments provided by user when calling from command line.
+     * @throws IOException when files provided by caller are missing
+     * @exception IOException when files provided by caller are missing
+     * @see IOException
+     */
     public static void main(String[] args) throws IOException {
 
         Log.INFO();

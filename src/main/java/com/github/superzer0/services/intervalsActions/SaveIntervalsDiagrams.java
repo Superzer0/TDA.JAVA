@@ -12,7 +12,31 @@ import edu.stanford.math.plex4.io.BarcodeWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+/**
+ * Saves intervals as diagrams
+ * @author Jakub Kawa
+ * @version 1.0
+ */
+
+
 public class SaveIntervalsDiagrams implements IIntervalsAction {
+
+    /**
+     * Saves barcode diagrams for each dimension intervals
+     * @param inputParams processing params
+     * @param computedIntervals TDA algorithm run output
+     */
+    @Override
+    public void run(ProcessingInputParams inputParams, BarcodeCollection<Double> computedIntervals) {
+        try {
+            Log.info("Creating barcode plot... ");
+            createBarcodePlot(computedIntervals, inputParams.getMaxFiltrationValue(),
+                    inputParams.getOutputFolder().toString());
+            Log.info("Created barcode plot.");
+        } catch (IOException e) {
+            Log.error("Creating barcode plot failed", e);
+        }
+    }
 
     private static <G> void createBarcodePlot(PersistenceInvariantDescriptor<Interval<Double>, G> collection,
                                               double endPoint, String folderPath) throws IOException {
@@ -23,18 +47,6 @@ public class SaveIntervalsDiagrams implements IIntervalsAction {
             String fullFileName = imageFilename + "." + writer.getExtension();
             String path = Paths.get(folderPath, fullFileName).toString();
             writer.writeToFile(collection, dimension, endPoint, imageFilename, path);
-        }
-    }
-
-    @Override
-    public void run(ProcessingInputParams inputParams, BarcodeCollection<Double> computedIntervals) {
-        try {
-            Log.info("Creating barcode plot... ");
-            createBarcodePlot(computedIntervals, inputParams.getMaxFiltrationValue(),
-                    inputParams.getOutputFolder().toString());
-            Log.info("Created barcode plot.");
-        } catch (IOException e) {
-            Log.error("Creating barcode plot failed", e);
         }
     }
 }
