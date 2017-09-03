@@ -25,7 +25,7 @@ e.g. *java -jar C:\tda.java\tdathesis-1.0-SNAPSHOT.jar  "C:\program_data\points_
 
 ## Output
 Program produces serveral files in specified output folder
-Barcodes_<num_dimension>.png where <num_dimension> is number of the dimension processed
-persistent_homology_summary.txt - all discovered persistence intervals saved in text file
-entropy.json - JSON array with all barcodes entropy. 
+* Barcodes_<num_dimension>.png where <num_dimension> is number of the dimension processed
+* persistent_homology_summary.txt - all discovered persistence intervals saved in text file
+* entropy.json - JSON array with all barcodes entropy. (http://www.sciencedirect.com/science/article/pii/S0031320314002453) 
 
