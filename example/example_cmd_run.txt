@@ -1,0 +1,1 @@
+java -jar tdathesis-1.0-SNAPSHOT.jar  "C:\temp\sample_fileo_octagon.json" 2 5 False 0 "C:\temp\results"
